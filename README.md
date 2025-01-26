@@ -39,8 +39,8 @@ It leverages Pytest and Playwright under the Page Object Model architecture, pro
 
 5) Logging Setup
 
-    Centralized logging configuration via logging.ini.
-    Logs are captured throughout test execution, making it easier to trace issues.
+    Centralized logging configuration via logger initlized in the base_page class and shared among all files.
+    Logs are captured throughout test execution and when interacting with elements, making it easier to trace issues.
 
 ## Project Structure
 
