@@ -194,7 +194,7 @@ To specify a browser type, use the following syntax:
 pytest --browser_type=<browser_name>
 ```
 
- ##End-to-End Test Overview
+ ### **End-to-End Test Overview**
 
 The `test_e2e_wolt.py` file simulates a complete user journey to ensure functionality works as intended. Below are the key steps involved in the test:
 
