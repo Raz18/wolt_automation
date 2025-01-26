@@ -227,12 +227,8 @@ You can dynamically adjust the restaurant name and food item selection within th
 # Navigate to the specified restaurant page
 restaurant_page = all_restaurants_page.go_to_restaurant_page("Your Restaurant Name")
 
-# Add food items from specific sections of the menu
+# Add how many food items from specific sections of the menu you'll like to add
 restaurant_page.add_food_items_on_specified_sections(2)
-checkout_page = restaurant_page.proceed_to_checkout()
-
-# Simulate the payment process
-order_status = checkout_page.pay(order_price, restaurant_display_name_in_all_restaurants_page)
 ```
 
 
