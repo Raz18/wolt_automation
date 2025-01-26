@@ -21,29 +21,28 @@ It leverages Pytest and Playwright under the Page Object Model architecture, pro
 
 1) Pytest + Playwright
 
-Utilizes Playwright for reliable end-to-end browser automation.
-Works seamlessly with Pytest’s rich ecosystem (fixtures, parametrization, etc.).
+    Utilizes Playwright for reliable end-to-end browser automation.
+    Works seamlessly with Pytest’s rich ecosystem (fixtures, parametrization, etc.).
 
 2) Page Object Model (POM)
-Each page and his dedicated locators are represented by a dedicated class under wolt_pages/.
+    Each page and his dedicated locators are represented by a dedicated class under wolt_pages/.
 
 3) Command-Line Browser Selection
 
-Choose your browser with a simple CLI option, e.g. --browser_type=chromium, --browser_type=firefox, or --browser_type=webkit.
-Enables easy cross-browser testing without code changes.
+    Choose your browser with a simple CLI option, e.g. --browser_type=chromium, --browser_type=firefox, or --browser_type=webkit.
+    Enables easy cross-browser testing without code changes.
 
 4) Screenshot on Failure
 
-Automatically captures and saves screenshots in the screenshots/ directory whenever a test fails.
-Increases visibility into failures and simplifies debugging.
+    Automatically captures and saves screenshots in the screenshots/ directory whenever a test fails.
+    Increases visibility into failures and simplifies debugging.
 
 5) Logging Setup
 
-Centralized logging configuration via logging.ini.
-Logs are captured throughout test execution, making it easier to trace issues.
+    Centralized logging configuration via logging.ini.
+    Logs are captured throughout test execution, making it easier to trace issues.
 
 ## Project Structure
-
 
 ```bash
 wolt-automation/
