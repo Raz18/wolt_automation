@@ -55,7 +55,7 @@ class BasePage:
         self.logger.info(f"Getting locator for selector: {selector}")
         return self.page.locator(selector)
 
-    def wait_for(self, element, timeout=5000):
+    def wait_for(self, element, timeout=10000):
         self.logger.info(f"Waiting for element to appear: {element}")
         try:
             if isinstance(element, str):
@@ -65,6 +65,15 @@ class BasePage:
         except Exception as e:
             self.logger.error(f"Failed to wait for element: {e}")
             raise
+
+    def is_text_visible(self, text):
+        self.logger.info(f"Checking if text '{text}' is visible on the page.")
+        try:
+            locator = self.locate(f"text={text}")
+            return locator.is_visible()
+        except Exception as e:
+            self.logger.error(f"Error while checking text visibility: {e}")
+            return False
 
     def get_text(self, element):
         try:

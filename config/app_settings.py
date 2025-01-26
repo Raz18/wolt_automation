@@ -12,6 +12,7 @@ class AppSettings:
     BASE_URL = os.getenv("BASE_URL")
     HEADLESS = os.getenv("HEADLESS", "True").lower() == "true"
     USER_EMAIL = os.getenv("USER_EMAIL")
+    USER_LOCATION = os.getenv("ADDRESS")
     BROWSER_ARGS = os.getenv("BROWSER_ARGS", "").split(",")
 
     @staticmethod
@@ -29,6 +30,11 @@ class AppSettings:
     def get_user_email():
         """Returns the user email for the application."""
         return AppSettings.USER_EMAIL
+
+    @staticmethod
+    def set_user_location():
+        """Returns the user location for the application."""
+        return AppSettings.USER_LOCATION
 
     @staticmethod
     def get_browser_args():

@@ -10,16 +10,35 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from config.app_settings import AppSettings
 from wolt_pages.discovery_page import DiscoveryPage
 
-
+def pytest_addoption(parser):
+    """
+    Adds a new command-line option --browser
+    so you can run pytest like: pytest --browser=firefox
+    """
+    parser.addoption(
+        "--browser_type",
+        action="store",
+        default="chromium",
+        help="Browser to run tests, e.g. chromium, firefox, or webkit",
+    )
 
 @pytest.fixture(scope="function")
-def browser_session():
+def browser_session(request):
     # Start Playwright
     with sync_playwright() as playwright:
         headless = AppSettings.is_headless()
         browser_args = AppSettings.get_browser_args()
+        browser_type = request.config.getoption("--browser_type")
 
-        browser = playwright.chromium.launch(headless=headless, args=browser_args)
+        if browser_type == "chromium":
+            browser = playwright.chromium.launch(headless=headless, args=browser_args)
+        elif browser_type == "firefox":
+            browser = playwright.firefox.launch(headless=headless, args=browser_args)
+        elif browser_type == "webkit":
+            browser = playwright.webkit.launch(headless=headless, args=browser_args)
+        else:
+            raise ValueError(f"Unsupported browser: {browser_type}")
+
         context = browser.new_context()
         page = context.new_page()
         page.goto(AppSettings.BASE_URL)

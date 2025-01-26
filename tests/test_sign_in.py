@@ -5,7 +5,7 @@ def test_successful_sign_in(browser_session):
     # Arrange
     discovery_page = DiscoveryPage(browser_session)
     login_flow=discovery_page.click_on_login()
-    #login_flow.wait_for_login_card()
+
     # Act
     login_flow.enter_email(AppSettings.get_user_email())
     login_success_message=login_flow.sign_in_mail_sent_successful()
@@ -16,7 +16,6 @@ def test_unsuccessful_sign_in(browser_session):
     # Arrange
     discovery_page = DiscoveryPage(browser_session)
     login_flow=discovery_page.click_on_login()
-    #login_flow.wait_for_login_card()
     # Act
     login_flow.enter_email("invalid_email")
     invalid_email_message=login_flow.invalid_email_message()

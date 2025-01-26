@@ -1,24 +1,27 @@
-from time import sleep
-
 from wolt_pages.discovery_page import DiscoveryPage
 from wolt_pages.all_restaurants_page import RestaurantsPage
 from wolt_pages.restaurant_page import RestaurantPage
+from config.app_settings import AppSettings
 
-
-def test_restaurants_load_and_click(browser_session):
+def test_e2e_restaurant(browser_session):
     discovery_page = DiscoveryPage(browser_session)
+
+    #first set the location
+    discovery_page.set_location(AppSettings.set_user_location())
+    #Navigate to all Restaurants page
     all_restaurants_page = discovery_page.go_to_restaurants()
 
     # Act: Wait for restaurants list to load
     all_restaurants_page.wait_for_restaurants_list_to_load()
 
-    # Navigate to a specific restaurant,name or first restaurant in the list of all restaurants
+    #print(all_restaurants_page.get_all_restaurant_names())
+    #change restaurant name to navigate to a different restaurant, enters the first restaurant with the name below
+    restaurant_page = all_restaurants_page.go_to_restaurant_page("Transit")
 
-    restaurant_page = all_restaurants_page.go_to_restaurant_page("Garage Burger | Rishon LeZion")
-    print(f"Navigating to restaurant: 'Abdalla'")
 
    # get the restaurant name displayed in all restaurants page
     restaurant_display_name_in_all_restaurants_page = all_restaurants_page.get_restaurant_display_card_name_for_validation()
+    print(f"Navigated to restaurant: {restaurant_display_name_in_all_restaurants_page}")
 
     # Verify restaurant name is the same is in card title
     restaurant_page.wait_for_restaurant_page_to_load()

@@ -7,11 +7,13 @@ from wolt_pages.restaurant_page import RestaurantPage
 class RestaurantsPage(BasePage):
     # All Restaurants locator list
     RESTAURANTS_OBJECTS_LIST_LOCATOR = "[data-test-id=\"VenueVerticalListGrid\"]"
-
+    MAIN_RESTAURANTS_PAGE_BODY_LOCATOR = "main"
     FIRST_RESTAURANT_LOCATOR = ".s47e3xb > a"
     DIV_RESTAURANT_NAME_LOCATOR = "div[class*='dllhz82']"
     RESTAURANT_NAME_LOCATOR = ".dllhz82"
-    MAIN_RESTAURANTS_PAGE_BODY_LOCATOR = "main"
+    #dynamic restaurnt locator
+    DYNAMIC_RESTUARANT_LOCATOR='[data-test-id^="venueCard."]'
+
 
     def get_all_restaurant_names(self, return_text=True):
         """
@@ -33,7 +35,7 @@ class RestaurantsPage(BasePage):
         # Iterate through the restaurant cards
         for restaurant_card in restaurant_cards.element_handles():
             card_text = self.get_text(restaurant_card)
-            print(card_text)
+            #print(card_text)
             if restaurant_name_input in card_text:
                 # Store the display name for validation
                 self.restaurant_display_name = card_text
@@ -66,19 +68,16 @@ class RestaurantsPage(BasePage):
 
 
     def wait_for_restaurants_list_to_load(self):
+        """wait for restuarnts list to load"""
         self.wait_for(self.RESTAURANTS_OBJECTS_LIST_LOCATOR)
         self.locate(self.RESTAURANTS_OBJECTS_LIST_LOCATOR).is_visible()
-
-    def wait_for_first_restaurant_to_load(self):
-        self.wait_for(self.FIRST_RESTAURANT_LOCATOR)
-        self.locate(self.FIRST_RESTAURANT_LOCATOR).is_visible()
 
     def interact_with_all_restaurants(self):
         """
         Iterate through all restaurant cards, enter to respecitve page and test if name is equal.
         """
 
-        restaurant_cards = self.locate('[data-test-id^="venueCard."]')  # dynamic locator
+        restaurant_cards = self.locate(self.DYNAMIC_RESTUARANT_LOCATOR)
         for i in range(restaurant_cards.count()):
             restaurant_card = restaurant_cards.nth(i)
             restaurant_card_name = restaurant_card.locator(self.RESTAURANT_NAME_LOCATOR).text_content()
@@ -87,7 +86,7 @@ class RestaurantsPage(BasePage):
             restaurant_card.click()
 
             restaurant_page = RestaurantPage(self.page)
-            restaurant_page.wait_for_restaurant_to_load()
+            restaurant_page.wait_for_restaurant_page_to_load()
             restaurant_page.verify_restaurant_name(restaurant_card_name)
 
             self.navigate_back()  # Navigate back after clicking
