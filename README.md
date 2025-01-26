@@ -24,7 +24,7 @@ It leverages Pytest and Playwright under the Page Object Model architecture, pro
 Utilizes Playwright for reliable end-to-end browser automation.
 Works seamlessly with Pytest’s rich ecosystem (fixtures, parametrization, etc.).
 
-2)Page Object Model (POM)
+2) Page Object Model (POM)
 Each page and his dedicated locators are represented by a dedicated class under wolt_pages/.
 
 3) Command-Line Browser Selection
