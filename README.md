@@ -5,10 +5,10 @@ End-to-end robust test automation infrastructure on wolt deliveries website
 - [Overview](#overview)
 - [Project Structure](#project-structure)
 - [Key Design Philosophy](#key-design-philosophy)
+- [Environment Configuration](#Environment-Configuration)
 - [Running the Tests](#running-the-tests)
-- [Environment Variables](#environment-variables)
-- [Writing New Tests](#writing-new-tests)
-- [Troubleshooting](#troubleshooting)
+
+
 
 # Overview
 
