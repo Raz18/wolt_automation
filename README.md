@@ -140,7 +140,7 @@ Key settings such as `BASE_URL`, `BROWSER`, and `HEADLESS` mode are stored in a 
 - Switch between different environments (e.g., staging, production).
 - Update configurations without modifying the code.
 
-### **Environment Variables**
+#Environment Variables
 The framework uses a `.env` file to store configurable settings. These variables allow you to easily switch between environments and customize the framework without modifying the codebase.
 
 ---
@@ -154,7 +154,7 @@ USER_EMAIL=your_test_email@example.com        # Email for login functionality
 USER_LOCATION=Rishon LeTsiyon                 # Default location for search functionality
 ```
 
-## **Running the Tests**
+# Running the Tests
 
 The Wolt Automation Framework includes various test scripts to validate functionality across the Wolt platform. Below are the instructions for running these tests.
 
