@@ -1,158 +1,194 @@
+# Wolt Automation Infrastructure
+
+End-to-end robust test automation infrastructure on wolt deliveries website
+## **Table of Contents**
+- [Overview](#overview)
+- [Project Structure](#project-structure)
+- [Key Design Philosophy](#key-design-philosophy)
+- [Running the Tests](#running-the-tests)
+- [Environment Variables](#environment-variables)
+- [Writing New Tests](#writing-new-tests)
+- [Troubleshooting](#troubleshooting)
+
 # Overview
 
-This project is a modular Python-based task management framework featuring:
+This repository contains a robust automation framework for testing the core functionality of the Wolt site, including sign in and search. 
 
-A Flask API server to interact with clients.
+It leverages Pytest and Playwright under the Page Object Model architecture, providing an easily maintainable, scalable, and developer-friendly setup.
 
-A backend task executor.
+**Key Features:**
 
-A custom HTTP server creation class template.
+1) Pytest + Playwright
 
-**The system supports:**
+Utilizes Playwright for reliable end-to-end browser automation.
+Works seamlessly with Pytest’s rich ecosystem (fixtures, parametrization, etc.).
 
-DNS queries.
+2)Page Object Model (POM)
+Each page and his dedicated locators are represented by a dedicated class under wolt_pages/.
 
-HTTP GET requests.
+3) Command-Line Browser Selection
 
-Dynamic creation of HTTP servers.
+Choose your browser with a simple CLI option, e.g. --browser_type=chromium, --browser_type=firefox, or --browser_type=webkit.
+Enables easy cross-browser testing without code changes.
 
-Listing all active http servers.
+4) Screenshot on Failure
 
-Stopping an active http server.
+Automatically captures and saves screenshots in the screenshots/ directory whenever a test fails.
+Increases visibility into failures and simplifies debugging.
 
-It is extendable, supports parallel task execution, and ensures efficient HTTP servers creation and management, all from a single API server as requested!
+5) Logging Setup
+
+Centralized logging configuration via logging.ini.
+Logs are captured throughout test execution, making it easier to trace issues.
 
 ## Project Structure
 
-**1. Main API Task Initiator Server (Main_API_Initiator.py)**
-This file acts as the entry point for the system and implements a Flask-based REST API.
-
-Routing of the Endpoints:
-
-/run_task: Executes a single task based on the provided task name and parameters (dns_query, http_get, create_http_server_task).
-
-/run_tasks: Executes multiple tasks in parallel and returns results for all.
-
-/active_servers: Lists all currently active HTTP servers, including their server_id, port, and page_uri.
-
-/stop_server: Stops an active server by specifying the server_id.
-
-**Task Execution Flow**
-  
-The Flask server routes incoming API requests to the backend API tasks for processing.
-
-HTTP related Tasks are executed based on the task name and parameters.
-
-Example Usage
 
 ```bash
-POST {Main_Flask_IP}:{Main_Flask_Port}/run_task
-Content-Type: application/json
-{
-  "task_name": "dns_query",
-  "params": {
-    "domain": "example.com"
-  }
-}
-```
-```bash
-{Main_Flask_IP}:{Main_Flask_Port}/run_tasks
-Content-Type: application/json
-{
-  "tasks": [
-    {
-      "task_name": "dns_query",
-      "params": { "domain": "example.com" }
-    },
-    {
-      "task_name": "http_get_request",
-      "params": { 
-        "domain_or_ip": "example.com", 
-        "port": 443, 
-        "uri": "/" 
-      }
-    },
-    {
-      "task_name": "create_http_server",
-      "params": { 
-        "port": 50010, 
-        "page_uri": "/test", 
-        "response_data": "This is a test page!" 
-      }
-    }
-  ]
-}
+wolt-automation/
+│
+├── config/
+│   ├── __init__.py
+│   ├── settings.py              # AppSettings class (reads .env file for configs like BASE_URL, headless mode)
+│
+├── pages/                       # Page Object Model (POM) classes
+│ 
+│   ├── base_page.py             # BasePage class with reusable methods for all pages
+│   ├── discovery_page.py        # DiscoveryPage class for home/discovery page actions
+│   ├── login_card.py            # LoginCard class for login functionality
+│   ├── restaurants_page.py      # RestaurantsPage class for actions inside the page 
+│   ├── all_restaurants_page.py  # AllRestaurantsPage class for listing and interacting with restaurants, in all restaurants page
+│   ├── checkout_page.py         # CheckoutPage class to mock and simulate the checkout process
+│
+├── tests/                       # Test scripts for various features
+│   ├── __init__.py
+│   ├── test_e2e_wolt.py         # End-to-end test for Wolt restaurant
+│   ├── test_search.py           # Tests for search functionality
+│   ├── test_sign_in.py          # Tests for login functionality
+│   ├── test_checkout.py         # Tests for the checkout process
+│
+├── utils/                       # Utility functions and helpers
+│   ├── __init__.py
+│   ├── logger.py                # Custom logger configuration
+│
+├── screenshots/                 # Screenshots directory (dedicated)
+│   ├── <screenshot files>.png   # Screenshots saved during test execution
+│
+├── reports/                     # Reports generated after test runs
+│
+├── .env                         # Environment variables for sensitive configs
+├── requirements.txt             # Python dependencies for the project
+├── pytest.ini                   # Pytest configuration (e.g., markers, options)
+├── .gitignore                   # Git ignore file for unwanted files (e.g., __pycache__)
+├── README.md                    # Project documentation and setup instructions
 
 
 ```
 
-**2. API Tasks File (Server_Tasks.py)**
+**Key Design Philosophy**
 
-This module implements the backend logic for executing tasks the tasks. 
+The Wolt Automation Framework is designed with a focus on **reusability**, **readability**, and **scalability**. Here's how these principles are embedded throughout the framework:
 
-**Features**
+---
 
-Centralized task execution logic for scalability.
+### **1. Reusability**
+To minimize duplication and ensure a modular structure, all commonly used methods are encapsulated in classes and designed to be shared across different test cases and page objects.
 
-Extendable to add new tasks by modifying the Main API class.
+#### **Example: BasePage**
+- The `BasePage` class provides generic methods for interacting with web elements, such as:
+- `locate`: Find elements dynamically.
+- `click_element`: Perform click actions with retries.
+- `write_on_element`: Enter text into input fields.
+- `wait_for`: Wait for elements to become visible or interactable.
+- `take_screenshot`: Capture a screenshot for debugging.
+- These methods are inherited by all other page classes, making the implementation consistent and reusable.
 
-Validates inputs for robust error handling,
+### **2. Readability**
+The framework is designed to ensure clarity and ease of understanding, making it easier to debug, maintain, and extend. This is achieved through structured code, descriptive methods, and integrated logging and reporting.
 
+---
 
-**3. HTTP Server Template (Http_Server_Template.py)**
+#### **Structured Locators**
+Locators are declared as constants at the top of each page class. This ensures:
+- Easy reference and updates when locators change.
+- Better readability by avoiding hardcoded locators scattered throughout the code.
 
-This module provides the logic for creating and managing HTTP servers using Python's HTTPServer.
-
-**Key Functionalities**
-
-Create New HTTP Servers
-
-Dynamically starts a new server on the specified port and URI.
-
-Tracks each server with a unique server_id.
-
-Track Active Servers.
-
-Maintains a dictionary of active servers (port, URI, server thread).
-
-Prevents duplication of servers on the same port or URI.
-
-Ensures a maximum of 10 servers are active.
-
-Validates port and URI availability before starting a new server.
-
-Safely shuts down servers when requested.
-
-
-## Running the Framework
-
+Example:
 ```python
-#Dependencies
-pip install flask requests pytest
+class DiscoveryPage(BasePage):
+    SEARCH_BAR = "input[placeholder='Search in Wolt...']"
+    DISCOVERY_TAB = "Discovery"
+    RESTAURANTS_TAB = "Restaurants"
 
-# starting the main server to receive tasks
-python Main_API_Initiator
+```
+### **3. Scalability**
+The framework is designed to support growth, allowing new tests, pages, and features to be added seamlessly.
+
+#### **Page Object Model (POM)**
+Each page or feature of the Wolt platform is represented by a dedicated class. This ensures that:
+- New features can be added as separate classes without interfering with existing ones.
+- Code is modular and easy to maintain.
+- Interactions with the application are logically grouped by functionality.
+
+For example:
+- `DiscoveryPage`: Handles actions like searching and navigating tabs.
+- `LoginCard`: Manages login functionality.
+- `RestaurantPage`: Manages interactions specific to individual restaurants.
+
+#### **Environment Configuration**
+Key settings such as `BASE_URL`, `BROWSER`, and `HEADLESS` mode are stored in a `.env` file. This makes it easy to:
+- Switch between different environments (e.g., staging, production).
+- Update configurations without modifying the code.
+
+### **Environment Variables**
+The framework uses a `.env` file to store configurable settings. These variables allow you to easily switch between environments and customize the framework without modifying the codebase.
+
+---
+
+#### **Example `.env` File**
+Below is an example of the `.env` file that you should create in the root directory of the project:
+```env
+BASE_URL=https://wolt.com/discovery           # Base URL of the Wolt platform
+HEADLESS=True                                 # Run tests in headless mode (True or False)       
+USER_EMAIL=your_test_email@example.com        # Email for login functionality
+USER_LOCATION=Rishon LeTsiyon                 # Default location for search functionality
+```
+
+## **Running the Tests**
+
+The Wolt Automation Framework includes various test scripts to validate functionality across the Wolt platform. Below are the instructions for running these tests.
+
+Follow these steps to clone the repository, navigate to the directory, and run the tests.
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Raz18/wolt_automation.git 
+cd wolt-automation
+```
+
+### Create and activate a virtual environment 
+python -m venv venv
+
+source venv/bin/activate
+
+### Install the project dependencies
+pip install -r requirements.txt
 
 
-url = "http://127.0.0.1:5000/run_task"
-#domain query task
-payload = {
-    "task_name": "dns_query",
-    "params": {
-        "domain": "example.com"
-    }
-}
-response = requests.post(url, json=payload)
-print(response.json())
+### **Run All Tests**
+To execute all test cases one by one, use the following command:
+```bash
+pytest tests/
+```
+**Available Browser Options**
+- `chromium` (default)
+- `firefox`
+- `webkit`
 
+#### **Command to Run Tests**
+To specify a browser type, use the following syntax:
 
-#http get task
-payload = {
-    "task_name": "http_get_request",
-    "params": {
-        "domain_or_ip": "example.com",
-        "port": 443,
-        "uri": "/"
-    }
-}
-response = requests.post(url, json=payload)
+```bash
+pytest --browser_type=<browser_name>
+```
