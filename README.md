@@ -8,7 +8,7 @@ End-to-end robust test automation infrastructure on wolt deliveries website
 - [Environment Configuration](#Environment-Configuration)
 - [Running the Tests](#running-the-tests)
 - [Reporting](#reporting)
-- [End-to-End detailed explanation](#end-to-end-test-explanation)
+- [End-to-End detailed explanation](#end-to-end-test-overviewn)
 
 
 
@@ -203,7 +203,7 @@ This aids in rapid debugging and failure analysis.
 A pytest html report will be generated automatically upon every test execution, the link will be shown in the terminal.
 
 
-### End-to-End Test Overview
+## End-to-End Test Overview
 
 The `test_e2e_wolt.py` file simulates a complete user journey to ensure functionality works as intended. Below are the key steps involved in the test:
 
