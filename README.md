@@ -7,6 +7,7 @@ End-to-end robust test automation infrastructure on wolt deliveries website
 - [Key Design Philosophy](#key-design-philosophy)
 - [Environment Configuration](#Environment-Configuration)
 - [Running the Tests](#running-the-tests)
+- [Reporting](#reporting)
 - [End-to-End detailed explanation](#end-to-end-test-explanation)
 
 
@@ -192,7 +193,15 @@ To specify a browser type, use the following syntax:
 ```bash
 pytest --browser_type=<browser_name>
 ```
-A pytest html report will be generated upon every test execution, the link will be shown in the terminal.
+## Reporting
+
+### Screenshot on Failure
+When a test fails, a screenshot is automatically saved in the `screenshots/` directory.  
+This aids in rapid debugging and failure analysis.
+
+### HTML Reports 
+A pytest html report will be generated automatically upon every test execution, the link will be shown in the terminal.
+
 
  ### **End-to-End Test Overview**
 
