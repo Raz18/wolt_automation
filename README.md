@@ -192,6 +192,7 @@ To specify a browser type, use the following syntax:
 ```bash
 pytest --browser_type=<browser_name>
 ```
+A pytest html report will be generated upon every test execution, the link will be shown in the terminal.
 
  ### **End-to-End Test Overview**
 
