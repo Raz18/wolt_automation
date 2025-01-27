@@ -205,7 +205,7 @@ pytest --browser_type=<browser_name>
 
 - **`test_sign_in.py`**  
   - Validates the sign-in process using valid and invalid credentials, leveraging custom fixtures to streamline setup and teardown.
-  - 
+    
 
 ## Reporting
 
