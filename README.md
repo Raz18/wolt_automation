@@ -182,10 +182,12 @@ To execute all test cases one by one, use the following command:
 ```bash
 pytest tests/
 ```
+
 **Available Browser Options**
 - `chromium` (default)
 - `firefox`
 - `webkit`
+
 
 #### **Command to Run Tests**
 To specify a browser type, use the following syntax:
@@ -193,6 +195,18 @@ To specify a browser type, use the following syntax:
 ```bash
 pytest --browser_type=<browser_name>
 ```
+### Test Suite Overview
+
+- **`test_e2e_wolt.py`**  
+  - Covers a comprehensive end-to-end flow, including setting a user location, navigating to restaurants, adding items to the cart, and simulating checkout.
+
+- **`test_search.py`**  
+  - Focuses on the restaurant search functionality, demonstrating **`@pytest.mark.parametrize`** to run the same test logic with different search terms.
+
+- **`test_sign_in.py`**  
+  - Validates the sign-in process using valid and invalid credentials, leveraging custom fixtures to streamline setup and teardown.
+  - 
+
 ## Reporting
 
 ### Screenshot on Failure
