@@ -57,7 +57,7 @@ wolt-automation/
 │   ├── base_page.py             # BasePage class with reusable methods for all pages
 │   ├── discovery_page.py        # DiscoveryPage class for home/discovery page actions
 │   ├── login_card.py            # LoginCard class for login functionality
-│   ├── restaurants_page.py      # RestaurantsPage class for actions inside the page 
+│   ├── restaurant_page.py      # RestaurantsPage class for actions inside the page 
 │   ├── all_restaurants_page.py  # AllRestaurantsPage class for listing and interacting with restaurants, in all restaurants page
 │   ├── checkout_page.py         # CheckoutPage class to mock and simulate the checkout process
 │
