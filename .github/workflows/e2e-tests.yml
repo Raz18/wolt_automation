@@ -26,6 +26,7 @@ jobs:
 
       - name: Install Playwright Browsers
         run: |
+          pip install playwright
           playwright install
 
       - name: Run End-to-End Tests
