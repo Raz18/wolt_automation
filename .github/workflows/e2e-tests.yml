@@ -19,6 +19,9 @@ jobs:
         with:
           python-version: '3.12' # or the python version being used
 
+      - name: Install Playwright Browsers
+        run: playwright install
+
       - name: Install Dependencies
         run: |
           python -m pip install --upgrade pip
