@@ -7,7 +7,8 @@ def test_e2e_restaurant(browser_session):
     discovery_page = DiscoveryPage(browser_session)
 
     #first set the location
-    discovery_page.set_location(AppSettings.set_user_location())
+    #discovery_page.set_location(AppSettings.set_user_location())
+    
     #Navigate to all Restaurants page
     all_restaurants_page = discovery_page.go_to_restaurants()
 
