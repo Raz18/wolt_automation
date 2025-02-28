@@ -19,7 +19,7 @@ class BasePage:
         self.logger.info(f"Navigating to the previous page")
         self.page.go_back()
 
-    def click_element(self, element, retries=10):
+    def click_element(self, element, retries=5):
         """
            Click an element using either a CSS selector or a Playwright Locator, with retry logic. """
         for attempt in range(1, retries + 1):
