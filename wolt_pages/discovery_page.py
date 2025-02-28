@@ -53,6 +53,7 @@ class DiscoveryPage(BasePage):
     def set_location(self, location="Rishon LeTsiyon"):
         """Click on the location input field."""
         self.locate(self.click_element(self.LOCATION_INPUT_LOCATOR))
+        self.page.wait_for("div.r11o4efq", state="hidden", timeout=10000)
         self.wait_for(self.ADDRESS_NAME_LOCATOR)
         self.write_on_element(self.ADDRESS_NAME_LOCATOR, location)
         #self.page.press(self.ADDRESS_NAME_LOCATOR, "Enter")
