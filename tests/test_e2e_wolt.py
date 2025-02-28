@@ -17,7 +17,7 @@ def test_e2e_restaurant(browser_session):
 
     #print(all_restaurants_page.get_all_restaurant_names())
     #change restaurant name to navigate to a different restaurant, enters the first restaurant with the name below
-    restaurant_page = all_restaurants_page.go_to_restaurant_page("Giraffe")
+    restaurant_page = all_restaurants_page.go_to_restaurant_page("Japanika")
 
 
    # get the restaurant name displayed in all restaurants page
