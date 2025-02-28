@@ -192,3 +192,40 @@ To specify a browser type, use the following syntax:
 ```bash
 pytest --browser_type=<browser_name>
 ```
+
+### *End-to-End Test Overview*
+
+The test_e2e_wolt.py file simulates a complete user journey throught wolt website from initilizing location to complete an order, to ensure end-to-end functionality works as intended. Below are the key steps involved in the test:
+
+### Workflow Steps
+1. *Set User Location*  
+   The test initializes the user location as the starting point.
+   
+2. *Navigate to the "All Restaurants" Page*  
+   The user is taken to the page listing all available restaurants.
+
+3. *Select a Restaurant by Name*  
+   Dynamically navigate to a specific restaurant using its name.
+
+4. *Add Food Items to the Cart*  
+   Food items from specified sections of the menu are added to the cart.
+
+5. *Proceed to Mocked Checkout*  
+   The test simulates moving to a mocked checkout page.
+
+6. *Simulate Payment and Validate Success*  
+   A payment simulation is performed, and the test ensures order success is validated.
+
+---
+
+### Key Code Section for Customization
+
+You can dynamically adjust the restaurant name and food item selection within the test file. The example code snippet is as follows:
+
+```python
+# Navigate to the specified restaurant page
+restaurant_page = all_restaurants_page.go_to_restaurant_page("Your Restaurant Name")
+
+# Add how many food items from specific sections of the menu you'll like to add
+restaurant_page.add_food_items_on_specified_sections(2)
+```
