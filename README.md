@@ -61,7 +61,7 @@ wolt-automation/
 │   ├── checkout_page.py         # CheckoutPage class to mock and simulate the checkout process
 │
 ├── tests/                       # Test scripts for various features
-│   ├── __init__.py
+│   ├── conftest.py              # pytest setup initilization file where driver is being set by utilizng a fixture and reports are being configured for enahnced logging 
 │   ├── test_e2e_wolt.py         # End-to-end test for Wolt restaurant
 │   ├── test_search.py           # Tests for search functionality
 │   ├── test_sign_in.py          # Tests for login functionality
